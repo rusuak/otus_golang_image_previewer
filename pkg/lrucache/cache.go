@@ -1,21 +1,19 @@
 package lrucache
 
-type Key string
-
 type Cache interface {
-	Set(key Key, value interface{}) bool
-	Get(key Key) (interface{}, bool)
+	Set(key string, value interface{}) bool
+	Get(key string) (interface{}, bool)
 	Clear()
 }
 
 type lruCache struct {
 	capacity int
 	queue    List
-	items    map[Key]*ListItem
+	items    map[string]*ListItem
 }
 
 type cacheItem struct {
-	key   Key
+	key   string
 	value interface{}
 }
 
@@ -23,11 +21,11 @@ func NewCache(capacity int) Cache {
 	return &lruCache{
 		capacity: capacity,
 		queue:    NewList(),
-		items:    make(map[Key]*ListItem, capacity),
+		items:    make(map[string]*ListItem, capacity),
 	}
 }
 
-func (cache *lruCache) Set(key Key, value interface{}) bool {
+func (cache *lruCache) Set(key string, value interface{}) bool {
 	newValue := cacheItem{key, value}
 
 	if _, ok := cache.items[key]; ok {
@@ -48,7 +46,7 @@ func (cache *lruCache) Set(key Key, value interface{}) bool {
 	return false
 }
 
-func (cache *lruCache) Get(key Key) (interface{}, bool) {
+func (cache *lruCache) Get(key string) (interface{}, bool) {
 	if _, ok := cache.items[key]; !ok {
 		return nil, false
 	}

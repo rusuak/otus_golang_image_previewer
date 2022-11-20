@@ -7,6 +7,8 @@ import (
 )
 
 func TestList(t *testing.T) {
+	t.Parallel()
+
 	t.Run("empty list", func(t *testing.T) {
 		l := NewList()
 
@@ -16,6 +18,8 @@ func TestList(t *testing.T) {
 	})
 
 	t.Run("complex", func(t *testing.T) {
+		t.Parallel()
+
 		l := NewList()
 
 		l.PushFront(10) // [10]
@@ -50,6 +54,8 @@ func TestList(t *testing.T) {
 	})
 
 	t.Run("single item", func(t *testing.T) {
+		t.Parallel()
+
 		l := NewList()
 
 		l.PushFront(10) // [10]
@@ -75,6 +81,8 @@ func TestList(t *testing.T) {
 	})
 
 	t.Run("movements", func(t *testing.T) {
+		t.Parallel()
+
 		l := NewList()
 
 		item1 := l.PushFront(11) // [11]

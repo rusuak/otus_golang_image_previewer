@@ -7,6 +7,8 @@ import (
 )
 
 func TestCache(t *testing.T) {
+	t.Parallel()
+
 	t.Run("empty cache", func(t *testing.T) {
 		c := NewCache(10)
 
@@ -18,6 +20,8 @@ func TestCache(t *testing.T) {
 	})
 
 	t.Run("simple", func(t *testing.T) {
+		t.Parallel()
+
 		c := NewCache(5)
 
 		wasInCache := c.Set("aaa", 100)
@@ -47,6 +51,8 @@ func TestCache(t *testing.T) {
 	})
 
 	t.Run("purge logic", func(t *testing.T) {
+		t.Parallel()
+
 		c := NewCache(5)
 		c.Set("aaa", 100)
 		c.Set("bbb", 222)
@@ -70,6 +76,8 @@ func TestCache(t *testing.T) {
 	})
 
 	t.Run("overflow push out", func(t *testing.T) {
+		t.Parallel()
+
 		c := NewCache(3)
 
 		c.Set("aaa", 111)
@@ -79,7 +87,7 @@ func TestCache(t *testing.T) {
 		// Проверяем элемент напрямую в списке, т.к. Get выносит элемент в начало списка
 		lastListItem := c.(*lruCache).queue.Back()
 		lastCachedItem := lastListItem.Value.(cacheItem)
-		require.Equal(t, Key("aaa"), lastCachedItem.key)
+		require.Equal(t, "aaa", lastCachedItem.key)
 		require.Equal(t, 111, lastCachedItem.value)
 
 		c.Set("ddd", 444)
@@ -90,6 +98,8 @@ func TestCache(t *testing.T) {
 	})
 
 	t.Run("last used push out", func(t *testing.T) {
+		t.Parallel()
+
 		c := NewCache(3)
 
 		c.Set("aaa", 111) // [aaa]
