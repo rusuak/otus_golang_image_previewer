@@ -1,0 +1,17 @@
+version: "3.6"
+
+networks:
+  ipreviewernet:
+
+services:
+  ipreviewer:
+    container_name: ipreviewer
+    build:
+      context: .
+      dockerfile: server.dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    networks:
+      - ipreviewernet
